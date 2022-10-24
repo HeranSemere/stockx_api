@@ -44,29 +44,16 @@ app.get("/user/watchlist", async(req,res)=>{
           }
   });
 
-  app.get("/user/watchlist/:id", async(req,res)=>{
-    const {id}= req.params
-  
-    try{
-      const post= await pool.query("SELECT * FROM company WHERE in_watchlist = true");
-    
-      //res.json({companies:post.rows});
-      res.json(post.rows);
-  
-          }catch(err){
-      console.error(err.message)
-          }
-  });
-
 
   app.put("/user/watchlist/:id", async(req,res)=>{
     const {id}= req.params
-  
+
+    
     try{
 
        let updateWatchlist = 'UPDATE company SET in_watchlist = $1 WHERE company_id = $2'
       
-      pool.query(updateWatchlist, ['true', req.params.id], (err, data) => {
+      pool.query(updateWatchlist, [req.body.in_watchlist, req.params.id], (err, data) => {
         if (err) console.log(err);
         res.json({message:"Watchlist was updated"})
       })
