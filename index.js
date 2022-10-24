@@ -66,7 +66,7 @@ app.get("/user/watchlist", async(req,res)=>{
 
        let updateWatchlist = 'UPDATE company SET in_watchlist = $1 WHERE company_id = $2'
       
-      pool.query(updateWatchlist, [req.body.item_state, req.params.id], (err, data) => {
+      pool.query(updateWatchlist, ['true', req.params.id], (err, data) => {
         if (err) console.log(err);
         res.json({message:"Watchlist was updated"})
       })
