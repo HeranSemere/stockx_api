@@ -18,6 +18,19 @@ const pool=new Pool({
 }
 );
 
+app.get("/user/companies", async(req,res)=>{
+  
+  try{
+    const post= await pool.query("SELECT * FROM company WHERE in_watchlist = false");
+  
+    //res.json({companies:post.rows});
+    res.json(post.rows);
+
+        }catch(err){
+    console.error(err.message)
+        }
+});
+
 app.get("/user/watchlist", async(req,res)=>{
   
     try{
