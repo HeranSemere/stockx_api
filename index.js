@@ -1,11 +1,8 @@
-const express = require('express');
+const express = require("express");
 const app = express();
-const http = require('http');
-const server = http.createServer(app);
-const io = require("socket.io")(server);
-var PORT = process.env.PORT || 3000
-app.use(express.json())
-
+const port = process.env.PORT || 3000
+const http = require("http").createServer(app);
+const io = require("socket.io")(http);
 
 const Pool=require("pg").Pool;
 
@@ -20,6 +17,143 @@ const pool=new Pool({
   },
 }
 );
+
+const companies = [
+  {
+  symbol: "TSLA",
+  name: "Tesla",
+  description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+  adj_closing: 102.5,
+  }, 
+  
+  {
+    symbol: "T",
+    name: "AT&T Inc.",
+    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    adj_closing: 55.5,
+    }, 
+  {
+  symbol: "APLE",
+  name: "Apple",
+  description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+  adj_closing: 153.99,
+  }, 
+  {
+    symbol: "GE",
+    name: "General Electric Company",
+    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    adj_closing: 199.8,
+    }, 
+  {
+  symbol: "GOOGL",
+  name: "Alphabet Inc",
+  description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+  adj_closing: 200,
+  }, 
+  {
+    symbol: "MSFT",
+    name: "Microsoft Corporation",
+    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    adj_closing: 237.45,
+    }, 
+  {
+  symbol: "AMZN",
+  name: "Amazon.com Inc.",
+  description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+  adj_closing: 108.34,
+  }, 
+  {
+    symbol: "BAC",
+    name: "Bank of America",
+    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    adj_closing: 99.9,
+    }, 
+  {
+  symbol: "JNJ",
+  name: "Johnson & Johnson",
+  description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+  adj_closing: 65.34,
+  }, 
+  {
+    symbol: "V",
+    name: "Visa Inc.",
+    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    adj_closing: 111.10,
+  }, 
+    {
+  symbol: "WMT",
+  name: "Walmart Inc.",
+  description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+  adj_closing: 80.5,
+  }, 
+  {
+  symbol: "META",
+  name: "Meta Platforms, Inc.",
+  description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+  adj_closing: 177.32,
+  }, 
+  {
+  symbol: "CVX",
+  name: "Chevron Corporation",
+  description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+  adj_closing: 142.1,
+  }, 
+  {
+  symbol: "NVDA",
+  name: "NVIDIA Corporation",
+  description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+  adj_closing: 181.90,
+  }, 
+  {
+  symbol: "MA",
+  name: "Mastercard Incorporated",
+  description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+  adj_closing: 121.2,
+  }, 
+  {
+  symbol: "HD",
+  name: "Home Depot",
+  description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+  adj_closing: 95.3,
+  }, 
+  {
+  symbol: "JPM",
+  name: "JP Morgan Chase & Co.",
+  description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+  adj_closing: 153.7,
+  }, 
+
+]
+
+
+var soc; //check for null before using this
+
+io.of("/socket_url").on("connection", async (socket) => { //sends list of buses from "database" on first fetch
+ 
+    //console.log("New User has Connected!");
+    soc = socket;
+
+    //console.log(JSON.stringify(companies))
+    socket.emit("firstFetch", JSON.stringify(companies));
+});
+
+function updateCompanies(){
+
+  companies.forEach(function(company) {
+    company.adj_closing = company.adj_closing - (Math.random() * 0.0011);
+});
+  
+  if(soc != undefined){
+    // soc.emit("updateBus", data); //send incoming data from buses to users that are listning to the "updateBus" event
+    //soc.broadcast.emit('updateBus',data) 
+    soc.broadcast.emit('companyUpdate', companies)
+    soc.emit('companyUpdate', companies)
+    //console.log("Companies updated"); 
+ }  
+}
+
+setInterval(updateCompanies, 100)
+
 
 app.get("/user/companies", async(req,res)=>{
   
@@ -66,19 +200,8 @@ app.get("/user/watchlist", async(req,res)=>{
           }
   });
 
-  var soc;
 
-  io.of("/socket_url").on("connection", (socket) => { //sends list of companies from "database" on first fetch
- 
-    console.log("New User has Connected!");
-    soc = socket;
-    socket.emit("firstFetch", "Companies");
 
+http.listen(port, () => {
+    console.log("Server Is Running Port: " + port);
 });
-
-
-
-  server.listen(PORT, ()=>{
-    console.log("Server is listning on port "+PORT);
-  });
-
