@@ -1,8 +1,11 @@
-const express=require("express");
-var PORT = process.env.PORT || 3000;
-const app= express();
-//const pool=require("./Database/db");
+const express = require('express');
+const app = express();
+const http = require('http');
+const server = http.createServer(app);
+const io = require("socket.io")(server);
+var PORT = process.env.PORT || 3000
 app.use(express.json())
+
 
 const Pool=require("pg").Pool;
 
@@ -64,6 +67,7 @@ app.get("/user/watchlist", async(req,res)=>{
   });
 
 
-  app.listen(PORT, ()=>{
+  server.listen(PORT, ()=>{
     console.log("Server is listning on port "+PORT);
   });
+
