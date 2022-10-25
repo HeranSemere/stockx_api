@@ -66,6 +66,17 @@ app.get("/user/watchlist", async(req,res)=>{
           }
   });
 
+  var soc;
+
+  io.of("/socket_url").on("connection", (socket) => { //sends list of companies from "database" on first fetch
+ 
+    console.log("New User has Connected!");
+    soc = socket;
+    socket.emit("firstFetch", "Companies");
+
+});
+
+
 
   server.listen(PORT, ()=>{
     console.log("Server is listning on port "+PORT);
