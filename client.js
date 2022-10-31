@@ -8,6 +8,7 @@ socket.on("firstFetch", (data) => {
       buses = data;
 });
 
+
 socket.on("companyUpdate", (data) => {
    console.log("Update from companies: ", data);
 

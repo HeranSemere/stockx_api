@@ -146,8 +146,8 @@ function updateCompanies(){
   if(soc != undefined){
     // soc.emit("updateBus", data); //send incoming data from buses to users that are listning to the "updateBus" event
     //soc.broadcast.emit('updateBus',data) 
-    soc.broadcast.emit('companyUpdate', companies)
-    soc.emit('companyUpdate', companies)
+    soc.broadcast.emit('companyUpdate', JSON.stringify(companies))
+    soc.emit('companyUpdate', JSON.stringify(companies))
     //console.log("Companies updated"); 
  }  
 }
