@@ -3,6 +3,7 @@ const app = express();
 const port = process.env.PORT || 3000
 const http = require("http").createServer(app);
 const io = require("socket.io")(http);
+app.use(express.json()) 
 
 const Pool=require("pg").Pool;
 
@@ -183,6 +184,7 @@ app.get("/user/watchlist", async(req,res)=>{
 
 
   app.put("/user/watchlist/:id", async(req,res)=>{
+    
     const {id}= req.params
 
     
