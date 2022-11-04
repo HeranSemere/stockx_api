@@ -32,7 +32,7 @@ app.use(express.json())
 
   setInterval(updateCompanies, 100)
 
-  app.post("/companies", async(req,res)=>{
+  app.get("/companies", async(req,res)=>{
     try{
       const companies_query = pool.query('SELECT * FROM company', (err, data) => {
         if(err) {return res.status(500).json({error: "Service currently not available"});}
