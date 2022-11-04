@@ -7,10 +7,8 @@ const jwt= require("jsonwebtoken");
 const bcrypt = require("bcryptjs")
 const companies = require("./util/socket_data");
 const pool = require("./Database/db");
-//const jwt_key = process.env.JWT_SECRET || 'cvTlQ37zikOavLwQ2yhMiCnJJoWo8fEXIPSOCUBKPDYS2pFwhH8EEkTHiHxx8iL'
-//const jwt_expire = process.env.JWT_EXPIRES || 86400
-const jwt_key = 'cvTlQ37zikOavLwQ2yhMiCnJJoWo8fEXIPSOCUBKPDYS2pFwhH8EEkTHiHxx8iL'
-const jwt_expire = 86400
+const jwt_key = process.env.JWT_SECRET || 'cvTlQ37zikOavLwQ2yhMiCnJJoWo8fEXIPSOCUBKPDYS2pFwhH8EEkTHiHxx8iL'
+const jwt_expire = process.env.JWT_EXPIRES || 86400
 app.use(express.json())
 
 
