@@ -8,7 +8,7 @@ const bcrypt = require("bcryptjs")
 const companies = require("./util/socket_data");
 const pool = require("./Database/db");
 const jwt_key = process.env.JWT_SECRET 
-const jwt_expire = process.env.JWT_EXPIRES
+const jwt_expire = process.env.JWT_EXPIRES 
 app.use(express.json())
 
 
