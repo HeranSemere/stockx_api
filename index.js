@@ -22,7 +22,7 @@ app.use(express.json())
 
   function updateCompanies(){
     companies.forEach(function(company) {
-      company.adj_closing = company.adj_closing - (Math.random() * 0.0011);
+      company.current_price = company.current_price - (Math.random() * 0.0011);
     });
     if(soc != undefined){
       soc.broadcast.emit('companyUpdate', JSON.stringify(companies))
