@@ -30,7 +30,7 @@ app.get("/companies", async(req,res)=>{
               if(storedToken.rows[0].token != token) {return res.status(401).json({error: "Unauthorized"});}
               const watchlist_query = pool.query('SELECT * FROM watchlist WHERE email = $1', [email.toLowerCase()], (err, data) => {
                 if(err) {return res.status(500).json({error: "Service currently not available"});}
-                return res.status(200).json({ watchlist: data.rows });
+                return res.status(200).json(data.rows);
               })
             })
           }catch(err){
@@ -361,7 +361,7 @@ app.get("/companies", async(req,res)=>{
               if(storedToken.rows[0].token != token) {return res.status(401).json({error: "Unauthorized"});}
               const limitbuy_query = pool.query('SELECT * FROM limit_buy_order WHERE email = $1', [email.toLowerCase()], (err, data) => {
                 if(err) {return res.status(500).json({error: "Service currently not available"});}
-                return res.status(200).json({ limit_buy_orders: data.rows });
+                return res.status(200).json(data.rows);
               })
             })
           }catch(err){
@@ -395,7 +395,7 @@ app.get("/companies", async(req,res)=>{
               if(storedToken.rows[0].token != token) {return res.status(401).json({error: "Unauthorized"});}
               const limitsell_query = pool.query('SELECT * FROM limit_sell_order WHERE email = $1', [email.toLowerCase()], (err, data) => {
                 if(err) {return res.status(500).json({error: "Service currently not available"});}
-                return res.status(200).json({ limit_sell_orders: data.rows });
+                return res.status(200).json(data.rows);
               })
             })
           }catch(err){
@@ -430,7 +430,7 @@ app.get("/companies", async(req,res)=>{
               if(storedToken.rows[0].token != token) {return res.status(401).json({error: "Unauthorized"});}
               const marketbuy_query = pool.query('SELECT * FROM market_buy_order WHERE email = $1', [email.toLowerCase()], (err, data) => {
                 if(err) {return res.status(500).json({error: "Service currently not available"});}
-                return res.status(200).json({ market_buy_orders: data.rows });
+                return res.status(200).json(data.rows);
               })
             })
           }catch(err){
@@ -464,7 +464,7 @@ app.get("/companies", async(req,res)=>{
               if(storedToken.rows[0].token != token) {return res.status(401).json({error: "Unauthorized"});}
               const marketsell_query = pool.query('SELECT * FROM market_sell_order WHERE email = $1', [email.toLowerCase()], (err, data) => {
                 if(err) {return res.status(500).json({error: "Service currently not available"});}
-                return res.status(200).json({ market_sell_orders: data.rows });
+                return res.status(200).json(data.rows);
               })
             })
           }catch(err){
@@ -500,7 +500,7 @@ app.get("/companies", async(req,res)=>{
               if(storedToken.rows[0].token != token) {return res.status(401).json({error: "Unauthorized"});}
               const stopbuy_query = pool.query('SELECT * FROM stop_buy_order WHERE email = $1', [email.toLowerCase()], (err, data) => {
                 if(err) {return res.status(500).json({error: "Service currently not available"});}
-                return res.status(200).json({ stop_buy_orders: data.rows });
+                return res.status(200).json(data.rows);
               })
             })
           }catch(err){
@@ -535,7 +535,7 @@ app.get("/companies", async(req,res)=>{
               if(storedToken.rows[0].token != token) {return res.status(401).json({error: "Unauthorized"});}
               const stopsell_query = pool.query('SELECT * FROM stop_sell_order WHERE email = $1', [email.toLowerCase()], (err, data) => {
                 if(err) {return res.status(500).json({error: "Service currently not available"});}
-                return res.status(200).json({ stop_sell_orders: data.rows });
+                return res.status(200).json(data.rows);
               })
             })
           }catch(err){
