@@ -54,3 +54,92 @@ CREATE TABLE investor(
     UNIQUE(tinnumber)
 );
 
+CREATE TABLE stop_buy_order(
+    order_id SERIAL PRIMARY KEY,
+    company_symbol VARCHAR(225),
+    shares INT,
+    stop_price float,
+    expire VARCHAR(225),
+    status VARCHAR(225) default 'Pending',
+    total_price float,
+    email VARCHAR(225),
+    CONSTRAINT fk_user_and_stop_buy_order
+      FOREIGN KEY(email) 
+	  REFERENCES investor(email)
+	  ON DELETE CASCADE
+);
+
+CREATE TABLE stop_sell_order(
+    order_id SERIAL PRIMARY KEY,
+    company_symbol VARCHAR(225),
+    shares INT,
+    stop_price float,
+    total_price float,
+    expire VARCHAR(225),
+    status VARCHAR(225) default 'Pending',
+    email VARCHAR(225),
+    CONSTRAINT fk_user_and_stop_sell_order
+      FOREIGN KEY(email) 
+	  REFERENCES investor(email)
+	  ON DELETE CASCADE
+);
+
+CREATE TABLE market_buy_order(
+    order_id SERIAL PRIMARY KEY,
+    company_symbol VARCHAR(225),
+    shares INT,
+    total_price float,
+    status VARCHAR(225) default 'Pending',
+    email VARCHAR(225),
+    CONSTRAINT fk_user_and_market_buy_order
+      FOREIGN KEY(email) 
+	  REFERENCES investor(email)
+	  ON DELETE CASCADE
+);
+
+CREATE TABLE market_sell_order(
+    order_id SERIAL PRIMARY KEY,
+    company_symbol VARCHAR(225),
+    shares INT,
+    total_price float,
+    status VARCHAR(225) default 'Pending',
+    email VARCHAR(225),
+    CONSTRAINT fk_user_and_market_sell_order
+      FOREIGN KEY(email) 
+	  REFERENCES investor(email)
+	  ON DELETE CASCADE
+);
+
+
+CREATE TABLE limit_buy_order(
+    order_id SERIAL PRIMARY KEY,
+    company_symbol VARCHAR(225),
+    shares INT,
+    limit_price float,
+    total_price float,
+    expire VARCHAR(225),
+    status VARCHAR(225) default 'Pending',
+    email VARCHAR(225),
+    CONSTRAINT fk_user_and_limit_buy_order
+      FOREIGN KEY(email) 
+	  REFERENCES investor(email)
+	  ON DELETE CASCADE
+);
+
+
+CREATE TABLE limit_sell_order(
+    order_id SERIAL PRIMARY KEY,
+    company_symbol VARCHAR(225),
+    shares INT,
+    limit_price float,
+    total_price float,
+    expire VARCHAR(225),
+    status VARCHAR(225) default 'Pending',
+    email VARCHAR(225),
+    CONSTRAINT fk_user_and_limit_sell_order
+      FOREIGN KEY(email) 
+	  REFERENCES investor(email)
+	  ON DELETE CASCADE
+);
+
+
