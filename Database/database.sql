@@ -154,6 +154,10 @@ CREATE TABLE stocks(
 	  ON DELETE CASCADE
 );
 
+INSERT INTO stocks(shares, company_symbol, email) values(10, 'TSLA', 'heran@gmail.com');
+INSERT INTO stocks(shares, company_symbol, email) values(7, 'APLE', 'heran@gmail.com');
+INSERT INTO stocks(shares, company_symbol, email) values(12, 'V', 'heran@gmail.com');
+INSERT INTO stocks(shares, company_symbol, email) values(3, 'HD', 'heran@gmail.com');
 
 CREATE TABLE administrator(
     user_id SERIAL PRIMARY KEY,

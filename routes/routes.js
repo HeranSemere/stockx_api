@@ -32,6 +32,7 @@ app.get("/companies", async(req,res)=>{
               if(storedToken.rows[0].token != token) {return res.status(401).json({error: "Unauthorized"});}
               const stocks_query = pool.query('SELECT * FROM stocks WHERE email = $1', [email.toLowerCase()], (err, data) => {
                 if(err) {return res.status(500).json({error: "Service currently not available"});}
+                delete data.rows[0].stock_id;
                 return res.status(200).json(data.rows);
               })
             })
