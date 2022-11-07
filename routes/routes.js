@@ -980,6 +980,9 @@ app.get("/companies", async(req,res)=>{
               if(storedToken.rows[0].token != token) {return res.status(401).json({error: "Unauthorized"});}
               const investors_query = pool.query('SELECT * FROM investor', (err, data) => {
                 if(err) {return res.status(500).json({error: "Service currently not available"});}
+                delete data.rows[0].password;
+                delete data.rows[0].token;
+                delete data.rows[0].user_id;
                 return res.status(200).json(data.rows);
               })
             
