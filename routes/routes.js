@@ -963,4 +963,39 @@ app.get("/companies", async(req,res)=>{
     }
   });
 
+  app.post("/admin/investors", async(req,res)=>{
+    try{
+      const {email} = req.body;
+      if (!(email)) {
+        return res.status(400).json({error: "All inputs are required"});
+      }
+      if (req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Bearer') {
+        var token =  req.headers.authorization.split(' ')[1];
+        var verified = jwt.verify(token, jwt_key);
+        if(verified){
+          try{
+            const token_query = pool.query('SELECT * FROM administrator WHERE email = $1', [email.toLowerCase()], (err, storedToken) => {
+              if(err) {return res.status(500).json({error: "Service currently not available"});}
+              if(storedToken.rowCount == 0) {return res.status(401).json({error: "Unauthorized"});}
+              if(storedToken.rows[0].token != token) {return res.status(401).json({error: "Unauthorized"});}
+              const investors_query = pool.query('SELECT * FROM investor', (err, data) => {
+                if(err) {return res.status(500).json({error: "Service currently not available"});}
+                return res.status(200).json(data.rows);
+              })
+            
+          })
+          }catch(err){
+            return res.status(500).json({error: "Service currently not available"});
+          }
+        }else{
+          return res.status(401).json({error: "Unauthorized"});
+        }
+      }else{
+        return res.status(401).json({error: "Unauthorized"});
+      }
+    }catch(e){
+      return res.status(401).json({error: "Unauthorized"});
+    }
+  });
+
 }
