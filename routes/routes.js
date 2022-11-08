@@ -1019,7 +1019,7 @@ app.get("/companies", async(req,res)=>{
               if(storedToken.rows[0].token != token) {return res.status(401).json({error: "Unauthorized"});}
               const update_investor = pool.query('UPDATE investor SET account_disabled = $1 WHERE email = $2', [account_disabled, investor_email.toLowerCase()], (err, data) => {
                 if(err) {return res.status(500).json({error: "Service currently not available"});}
-                if(data.rowCount == 0) {return res.status(500).json({error: "Service currently not available"});}
+                if(data.rowCount == 0) {return res.status(500).json({error: "User not modfied. User might not exist."});}
                 return res.status(200).json({ message: "User modfied" });
               })
             
