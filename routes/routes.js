@@ -27,9 +27,9 @@ app.get("/companies", async(req,res)=>{
           try{
             const token_query = pool.query('SELECT * FROM investor WHERE email = $1', [email.toLowerCase()], (err, storedToken) => {
               if(err) {return res.status(500).json({error: "Service currently not available"});}
-              if(storedToken.rows[0].account_disabled) {return res.status(401).json({error: "Account is disabled"});}
               if(storedToken.rowCount == 0) {return res.status(401).json({error: "Unauthorized"});}
               if(storedToken.rows[0].token != token) {return res.status(401).json({error: "Unauthorized"});}
+              if(storedToken.rows[0].account_disabled) {return res.status(401).json({error: "Account is disabled"});}
               const stocks_query = pool.query('SELECT * FROM stocks WHERE email = $1', [email.toLowerCase()], (err, data) => {
                 if(err) {return res.status(500).json({error: "Service currently not available"});}
                 delete data.rows[0].stock_id;
@@ -63,9 +63,9 @@ app.get("/companies", async(req,res)=>{
           try{
             const token_query = pool.query('SELECT * FROM investor WHERE email = $1', [email.toLowerCase()], (err, storedToken) => {
               if(err) {return res.status(500).json({error: "Service currently not available"});}
-              if(storedToken.rows[0].account_disabled) {return res.status(401).json({error: "Account is disabled"});}
               if(storedToken.rowCount == 0) {return res.status(401).json({error: "Unauthorized"});}
               if(storedToken.rows[0].token != token) {return res.status(401).json({error: "Unauthorized"});}
+              if(storedToken.rows[0].account_disabled) {return res.status(401).json({error: "Account is disabled"});}
               const watchlist_query = pool.query('SELECT * FROM watchlist WHERE email = $1', [email.toLowerCase()], (err, data) => {
                 if(err) {return res.status(500).json({error: "Service currently not available"});}
                 return res.status(200).json(data.rows);
@@ -99,9 +99,9 @@ app.get("/companies", async(req,res)=>{
           try{
             const token_query = pool.query('SELECT * FROM investor WHERE email = $1', [email.toLowerCase()], (err, storedToken) => {
               if(err) {return res.status(500).json({error: "Service currently not available"});}
-              if(storedToken.rows[0].account_disabled) {return res.status(401).json({error: "Account is disabled"});}
               if(storedToken.rowCount == 0) {return res.status(401).json({error: "Unauthorized"});}
               if(storedToken.rows[0].token != token) {return res.status(401).json({error: "Unauthorized"});}
+              if(storedToken.rows[0].account_disabled) {return res.status(401).json({error: "Account is disabled"});}
               const check_item_query = pool.query('SELECT * FROM watchlist WHERE email = $1 and company_symbol = $2', [email.toLowerCase(), company_symbol], (err, data) => {
                 if(err) {return res.status(500).json({error: "Service currently not available"});}
                 if(data.rowCount != 0) {return res.status(200).json({ message: "Watchlist item exists" });}
@@ -140,9 +140,9 @@ app.get("/companies", async(req,res)=>{
           try{
             const token_query = pool.query('SELECT * FROM investor WHERE email = $1', [email.toLowerCase()], (err, storedToken) => {
               if(err) {return res.status(500).json({error: "Service currently not available"});}
-              if(storedToken.rows[0].account_disabled) {return res.status(401).json({error: "Account is disabled"});}
               if(storedToken.rowCount == 0) {return res.status(401).json({error: "Unauthorized"});}
               if(storedToken.rows[0].token != token) {return res.status(401).json({error: "Unauthorized"});}
+              if(storedToken.rows[0].account_disabled) {return res.status(401).json({error: "Account is disabled"});}
               const delete_item_query = pool.query('DELETE FROM watchlist WHERE company_symbol = $1 AND email = $2', [company_symbol ,email.toLowerCase()], (err, data) => {
                 if(err) {return res.status(500).json({error: "Service currently not available"});}
                 if(data.rowCount == 0) { return res.status(200).json({ message: "Watchlist item not in list" });}
@@ -178,9 +178,9 @@ app.get("/companies", async(req,res)=>{
           try{
             const token_query = pool.query('SELECT * FROM investor WHERE email = $1', [email.toLowerCase()], (err, storedToken) => {
               if(err) {return res.status(500).json({error: "Service currently not available"});}
-              if(storedToken.rows[0].account_disabled) {return res.status(401).json({error: "Account is disabled"});}
               if(storedToken.rowCount == 0) {return res.status(401).json({error: "Unauthorized"});}
               if(storedToken.rows[0].token != token) {return res.status(401).json({error: "Unauthorized"});}
+              if(storedToken.rows[0].account_disabled) {return res.status(401).json({error: "Account is disabled"});}
               const new_stop_buy_query = pool.query('INSERT INTO stop_buy_order(company_symbol, shares, stop_price, expire, email) VALUES($1, $2, $3, $4, $5)', [company_symbol, shares, stop_price, expire, email.toLowerCase()], (err, data) => {
                 if(err) {return res.status(500).json({error: "Service currently not available"});}
                 if(data.rowCount == 0) {return res.status(500).json({error: "Service currently not available"});}
@@ -216,9 +216,9 @@ app.get("/companies", async(req,res)=>{
           try{
             const token_query = pool.query('SELECT * FROM investor WHERE email = $1', [email.toLowerCase()], (err, storedToken) => {
               if(err) {return res.status(500).json({error: "Service currently not available"});}
-              if(storedToken.rows[0].account_disabled) {return res.status(401).json({error: "Account is disabled"});}
               if(storedToken.rowCount == 0) {return res.status(401).json({error: "Unauthorized"});}
               if(storedToken.rows[0].token != token) {return res.status(401).json({error: "Unauthorized"});}
+              if(storedToken.rows[0].account_disabled) {return res.status(401).json({error: "Account is disabled"});}
               const new_market_buy_query = pool.query('INSERT INTO market_buy_order(company_symbol, shares, email) VALUES($1, $2, $3)', [company_symbol, shares, email.toLowerCase()], (err, data) => {
                 if(err) {return res.status(500).json({error: "Service currently not available"});}
                 if(data.rowCount == 0) {return res.status(500).json({error: "Service currently not available"});}
@@ -253,9 +253,9 @@ app.get("/companies", async(req,res)=>{
           try{
             const token_query = pool.query('SELECT * FROM investor WHERE email = $1', [email.toLowerCase()], (err, storedToken) => {
               if(err) {return res.status(500).json({error: "Service currently not available"});}
-              if(storedToken.rows[0].account_disabled) {return res.status(401).json({error: "Account is disabled"});}
               if(storedToken.rowCount == 0) {return res.status(401).json({error: "Unauthorized"});}
               if(storedToken.rows[0].token != token) {return res.status(401).json({error: "Unauthorized"});}
+              if(storedToken.rows[0].account_disabled) {return res.status(401).json({error: "Account is disabled"});}
               const new_limit_buy_query = pool.query('INSERT INTO limit_buy_order(company_symbol, shares, limit_price, expire, email) VALUES($1, $2, $3, $4, $5)', [company_symbol, shares, limit_price, expire, email.toLowerCase()], (err, data) => {
                 if(err) {return res.status(500).json({error: "Service currently not available"});}
                 if(data.rowCount == 0) {return res.status(500).json({error: "Service currently not available"});}
@@ -290,9 +290,9 @@ app.get("/companies", async(req,res)=>{
           try{
             const token_query = pool.query('SELECT * FROM investor WHERE email = $1', [email.toLowerCase()], (err, storedToken) => {
               if(err) {return res.status(500).json({error: "Service currently not available"});}
-              if(storedToken.rows[0].account_disabled) {return res.status(401).json({error: "Account is disabled"});}
               if(storedToken.rowCount == 0) {return res.status(401).json({error: "Unauthorized"});}
               if(storedToken.rows[0].token != token) {return res.status(401).json({error: "Unauthorized"});}
+              if(storedToken.rows[0].account_disabled) {return res.status(401).json({error: "Account is disabled"});}
               const new_stop_sell_query = pool.query('INSERT INTO stop_sell_order(company_symbol, shares, stop_price, expire, email) VALUES($1, $2, $3, $4, $5)', [company_symbol, shares, stop_price, expire, email.toLowerCase()], (err, data) => {
                 if(err) {return res.status(500).json({error: "Service currently not available"});}
                 if(data.rowCount == 0) {return res.status(500).json({error: "Service currently not available"});}
@@ -328,9 +328,9 @@ app.get("/companies", async(req,res)=>{
           try{
             const token_query = pool.query('SELECT * FROM investor WHERE email = $1', [email.toLowerCase()], (err, storedToken) => {
               if(err) {return res.status(500).json({error: "Service currently not available"});}
-              if(storedToken.rows[0].account_disabled) {return res.status(401).json({error: "Account is disabled"});}
               if(storedToken.rowCount == 0) {return res.status(401).json({error: "Unauthorized"});}
               if(storedToken.rows[0].token != token) {return res.status(401).json({error: "Unauthorized"});}
+              if(storedToken.rows[0].account_disabled) {return res.status(401).json({error: "Account is disabled"});}
               const new_market_sell_query = pool.query('INSERT INTO market_sell_order(company_symbol, shares, email) VALUES($1, $2, $3)', [company_symbol, shares, email.toLowerCase()], (err, data) => {
                 if(err) {return res.status(500).json({error: "Service currently not available"});}
                 if(data.rowCount == 0) {return res.status(500).json({error: "Service currently not available"});}
@@ -366,9 +366,9 @@ app.get("/companies", async(req,res)=>{
           try{
             const token_query = pool.query('SELECT * FROM investor WHERE email = $1', [email.toLowerCase()], (err, storedToken) => {
               if(err) {return res.status(500).json({error: "Service currently not available"});}
-              if(storedToken.rows[0].account_disabled) {return res.status(401).json({error: "Account is disabled"});}
               if(storedToken.rowCount == 0) {return res.status(401).json({error: "Unauthorized"});}
               if(storedToken.rows[0].token != token) {return res.status(401).json({error: "Unauthorized"});}
+              if(storedToken.rows[0].account_disabled) {return res.status(401).json({error: "Account is disabled"});}
               const new_limit_sell_query = pool.query('INSERT INTO limit_sell_order(company_symbol, shares, limit_price, expire, email) VALUES($1, $2, $3, $4, $5)', [company_symbol, shares, limit_price, expire, email.toLowerCase()], (err, data) => {
                 if(err) {return res.status(500).json({error: "Service currently not available"});}
                 if(data.rowCount == 0) {return res.status(500).json({error: "Service currently not available"});}
@@ -403,9 +403,9 @@ app.get("/companies", async(req,res)=>{
           try{
             const token_query = pool.query('SELECT * FROM investor WHERE email = $1', [email.toLowerCase()], (err, storedToken) => {
               if(err) {return res.status(500).json({error: "Service currently not available"});}
-              if(storedToken.rows[0].account_disabled) {return res.status(401).json({error: "Account is disabled"});}
               if(storedToken.rowCount == 0) {return res.status(401).json({error: "Unauthorized"});}
               if(storedToken.rows[0].token != token) {return res.status(401).json({error: "Unauthorized"});}
+              if(storedToken.rows[0].account_disabled) {return res.status(401).json({error: "Account is disabled"});}
               const limitbuy_query = pool.query('SELECT * FROM limit_buy_order WHERE email = $1', [email.toLowerCase()], (err, data) => {
                 if(err) {return res.status(500).json({error: "Service currently not available"});}
                 return res.status(200).json(data.rows);
@@ -438,9 +438,9 @@ app.get("/companies", async(req,res)=>{
           try{
             const token_query = pool.query('SELECT * FROM investor WHERE email = $1', [email.toLowerCase()], (err, storedToken) => {
               if(err) {return res.status(500).json({error: "Service currently not available"});}
-              if(storedToken.rows[0].account_disabled) {return res.status(401).json({error: "Account is disabled"});}
               if(storedToken.rowCount == 0) {return res.status(401).json({error: "Unauthorized"});}
               if(storedToken.rows[0].token != token) {return res.status(401).json({error: "Unauthorized"});}
+              if(storedToken.rows[0].account_disabled) {return res.status(401).json({error: "Account is disabled"});}
               const limitsell_query = pool.query('SELECT * FROM limit_sell_order WHERE email = $1', [email.toLowerCase()], (err, data) => {
                 if(err) {return res.status(500).json({error: "Service currently not available"});}
                 return res.status(200).json(data.rows);
@@ -474,9 +474,9 @@ app.get("/companies", async(req,res)=>{
           try{
             const token_query = pool.query('SELECT * FROM investor WHERE email = $1', [email.toLowerCase()], (err, storedToken) => {
               if(err) {return res.status(500).json({error: "Service currently not available"});}
-              if(storedToken.rows[0].account_disabled) {return res.status(401).json({error: "Account is disabled"});}
               if(storedToken.rowCount == 0) {return res.status(401).json({error: "Unauthorized"});}
               if(storedToken.rows[0].token != token) {return res.status(401).json({error: "Unauthorized"});}
+              if(storedToken.rows[0].account_disabled) {return res.status(401).json({error: "Account is disabled"});}
               const marketbuy_query = pool.query('SELECT * FROM market_buy_order WHERE email = $1', [email.toLowerCase()], (err, data) => {
                 if(err) {return res.status(500).json({error: "Service currently not available"});}
                 return res.status(200).json(data.rows);
@@ -509,9 +509,9 @@ app.get("/companies", async(req,res)=>{
           try{
             const token_query = pool.query('SELECT * FROM investor WHERE email = $1', [email.toLowerCase()], (err, storedToken) => {
               if(err) {return res.status(500).json({error: "Service currently not available"});}
-              if(storedToken.rows[0].account_disabled) {return res.status(401).json({error: "Account is disabled"});}
               if(storedToken.rowCount == 0) {return res.status(401).json({error: "Unauthorized"});}
               if(storedToken.rows[0].token != token) {return res.status(401).json({error: "Unauthorized"});}
+              if(storedToken.rows[0].account_disabled) {return res.status(401).json({error: "Account is disabled"});}
               const marketsell_query = pool.query('SELECT * FROM market_sell_order WHERE email = $1', [email.toLowerCase()], (err, data) => {
                 if(err) {return res.status(500).json({error: "Service currently not available"});}
                 return res.status(200).json(data.rows);
@@ -546,9 +546,9 @@ app.get("/companies", async(req,res)=>{
           try{
             const token_query = pool.query('SELECT * FROM investor WHERE email = $1', [email.toLowerCase()], (err, storedToken) => {
               if(err) {return res.status(500).json({error: "Service currently not available"});}
-              if(storedToken.rows[0].account_disabled) {return res.status(401).json({error: "Account is disabled"});}
               if(storedToken.rowCount == 0) {return res.status(401).json({error: "Unauthorized"});}
               if(storedToken.rows[0].token != token) {return res.status(401).json({error: "Unauthorized"});}
+              if(storedToken.rows[0].account_disabled) {return res.status(401).json({error: "Account is disabled"});}
               const stopbuy_query = pool.query('SELECT * FROM stop_buy_order WHERE email = $1', [email.toLowerCase()], (err, data) => {
                 if(err) {return res.status(500).json({error: "Service currently not available"});}
                 return res.status(200).json(data.rows);
@@ -582,9 +582,9 @@ app.get("/companies", async(req,res)=>{
           try{
             const token_query = pool.query('SELECT * FROM investor WHERE email = $1', [email.toLowerCase()], (err, storedToken) => {
               if(err) {return res.status(500).json({error: "Service currently not available"});}
-              if(storedToken.rows[0].account_disabled) {return res.status(401).json({error: "Account is disabled"});}
               if(storedToken.rowCount == 0) {return res.status(401).json({error: "Unauthorized"});}
               if(storedToken.rows[0].token != token) {return res.status(401).json({error: "Unauthorized"});}
+              if(storedToken.rows[0].account_disabled) {return res.status(401).json({error: "Account is disabled"});}
               const stopsell_query = pool.query('SELECT * FROM stop_sell_order WHERE email = $1', [email.toLowerCase()], (err, data) => {
                 if(err) {return res.status(500).json({error: "Service currently not available"});}
                 return res.status(200).json(data.rows);
@@ -693,9 +693,9 @@ app.get("/companies", async(req,res)=>{
           try{
             const token_query = pool.query('SELECT * FROM investor WHERE email = $1', [email.toLowerCase()], (err, storedToken) => {
               if(err) {return res.status(500).json({error: "Service currently not available"});}
-              if(storedToken.rows[0].account_disabled) {return res.status(401).json({error: "Account is disabled"});}
               if(storedToken.rowCount == 0) {return res.status(401).json({error: "Unauthorized"});}
               if(storedToken.rows[0].token != token) {return res.status(401).json({error: "Unauthorized"});}
+              if(storedToken.rows[0].account_disabled) {return res.status(401).json({error: "Account is disabled"});}
               const delete_item_query = pool.query('DELETE FROM stop_buy_order WHERE order_id = $1 AND email = $2', [order_id ,email.toLowerCase()], (err, data) => {
                 if(err) {return res.status(500).json({error: "Service currently not available"});}
                 if(data.rowCount == 0) { return res.status(200).json({ message: "Item not in list" });}
@@ -730,9 +730,9 @@ app.get("/companies", async(req,res)=>{
           try{
             const token_query = pool.query('SELECT * FROM investor WHERE email = $1', [email.toLowerCase()], (err, storedToken) => {
               if(err) {return res.status(500).json({error: "Service currently not available"});}
-              if(storedToken.rows[0].account_disabled) {return res.status(401).json({error: "Account is disabled"});}
               if(storedToken.rowCount == 0) {return res.status(401).json({error: "Unauthorized"});}
               if(storedToken.rows[0].token != token) {return res.status(401).json({error: "Unauthorized"});}
+              if(storedToken.rows[0].account_disabled) {return res.status(401).json({error: "Account is disabled"});}
               const delete_item_query = pool.query('DELETE FROM stop_sell_order WHERE order_id = $1 AND email = $2', [order_id ,email.toLowerCase()], (err, data) => {
                 if(err) {return res.status(500).json({error: "Service currently not available"});}
                 if(data.rowCount == 0) { return res.status(200).json({ message: "Item not in list" });}
@@ -767,9 +767,9 @@ app.get("/companies", async(req,res)=>{
           try{
             const token_query = pool.query('SELECT * FROM investor WHERE email = $1', [email.toLowerCase()], (err, storedToken) => {
               if(err) {return res.status(500).json({error: "Service currently not available"});}
-              if(storedToken.rows[0].account_disabled) {return res.status(401).json({error: "Account is disabled"});}
               if(storedToken.rowCount == 0) {return res.status(401).json({error: "Unauthorized"});}
               if(storedToken.rows[0].token != token) {return res.status(401).json({error: "Unauthorized"});}
+              if(storedToken.rows[0].account_disabled) {return res.status(401).json({error: "Account is disabled"});}
               const delete_item_query = pool.query('DELETE FROM market_sell_order WHERE order_id = $1 AND email = $2', [order_id ,email.toLowerCase()], (err, data) => {
                 if(err) {return res.status(500).json({error: "Service currently not available"});}
                 if(data.rowCount == 0) { return res.status(200).json({ message: "Item not in list" });}
@@ -803,9 +803,9 @@ app.get("/companies", async(req,res)=>{
           try{
             const token_query = pool.query('SELECT * FROM investor WHERE email = $1', [email.toLowerCase()], (err, storedToken) => {
               if(err) {return res.status(500).json({error: "Service currently not available"});}
-              if(storedToken.rows[0].account_disabled) {return res.status(401).json({error: "Account is disabled"});}
               if(storedToken.rowCount == 0) {return res.status(401).json({error: "Unauthorized"});}
               if(storedToken.rows[0].token != token) {return res.status(401).json({error: "Unauthorized"});}
+              if(storedToken.rows[0].account_disabled) {return res.status(401).json({error: "Account is disabled"});}
               const delete_item_query = pool.query('DELETE FROM market_buy_order WHERE order_id = $1 AND email = $2', [order_id ,email.toLowerCase()], (err, data) => {
                 if(err) {return res.status(500).json({error: "Service currently not available"});}
                 if(data.rowCount == 0) { return res.status(200).json({ message: "Item not in list" });}
@@ -840,9 +840,9 @@ app.get("/companies", async(req,res)=>{
           try{
             const token_query = pool.query('SELECT * FROM investor WHERE email = $1', [email.toLowerCase()], (err, storedToken) => {
               if(err) {return res.status(500).json({error: "Service currently not available"});}
-              if(storedToken.rows[0].account_disabled) {return res.status(401).json({error: "Account is disabled"});}
               if(storedToken.rowCount == 0) {return res.status(401).json({error: "Unauthorized"});}
               if(storedToken.rows[0].token != token) {return res.status(401).json({error: "Unauthorized"});}
+              if(storedToken.rows[0].account_disabled) {return res.status(401).json({error: "Account is disabled"});}
               const delete_item_query = pool.query('DELETE FROM limit_sell_order WHERE order_id = $1 AND email = $2', [order_id ,email.toLowerCase()], (err, data) => {
                 if(err) {return res.status(500).json({error: "Service currently not available"});}
                 if(data.rowCount == 0) { return res.status(200).json({ message: "Item not in list" });}
@@ -877,9 +877,9 @@ app.get("/companies", async(req,res)=>{
           try{
             const token_query = pool.query('SELECT * FROM investor WHERE email = $1', [email.toLowerCase()], (err, storedToken) => {
               if(err) {return res.status(500).json({error: "Service currently not available"});}
-              if(storedToken.rows[0].account_disabled) {return res.status(401).json({error: "Account is disabled"});}
               if(storedToken.rowCount == 0) {return res.status(401).json({error: "Unauthorized"});}
               if(storedToken.rows[0].token != token) {return res.status(401).json({error: "Unauthorized"});}
+              if(storedToken.rows[0].account_disabled) {return res.status(401).json({error: "Account is disabled"});}
               const delete_item_query = pool.query('DELETE FROM limit_buy_order WHERE order_id = $1 AND email = $2', [order_id ,email.toLowerCase()], (err, data) => {
                 if(err) {return res.status(500).json({error: "Service currently not available"});}
                 if(data.rowCount == 0) { return res.status(200).json({ message: "Item not in list" });}
