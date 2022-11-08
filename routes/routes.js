@@ -1004,8 +1004,8 @@ app.get("/companies", async(req,res)=>{
 
   app.put("/admin/investor", async(req,res)=>{
     try{
-      const {email, investor_id, disable} = req.body;
-      if (!(email && investor_id && disable)) {
+      const {email, investor_id, account_disabled} = req.body;
+      if (!(email && investor_id && account_disabled)) {
         return res.status(400).json({error: "All inputs are required"});
       }
       if (req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Bearer') {
@@ -1017,7 +1017,7 @@ app.get("/companies", async(req,res)=>{
               if(err) {return res.status(500).json({error: "Service currently not available"});}
               if(storedToken.rowCount == 0) {return res.status(401).json({error: "Unauthorized"});}
               if(storedToken.rows[0].token != token) {return res.status(401).json({error: "Unauthorized"});}
-              const update_investor = pool.query('UPDATE investor SET account_disabled = $1 WHERE email = $2', [disable, email.toLowerCase()], (err, data) => {
+              const update_investor = pool.query('UPDATE investor SET account_disabled = $1 WHERE email = $2', [account_disabled, email.toLowerCase()], (err, data) => {
                 if(err) {return res.status(500).json({error: "Service currently not available"});}
                 if(data.rowCount == 0) {return res.status(500).json({error: "Service currently not available"});}
                 return res.status(200).json({ message: "User modfied" });

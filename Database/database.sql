@@ -171,4 +171,4 @@ CREATE TABLE administrator(
     UNIQUE(email)
 );
 
-INSERT INTO administrator(first_name, fathers_name, grandfathers_name, email, phone, password) values('Abebe', 'Zewde', 'Welde')
+INSERT INTO administrator(first_name, fathers_name, grandfathers_name, email, phone, password) values('admin', '', '')
