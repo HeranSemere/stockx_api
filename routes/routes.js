@@ -30,9 +30,8 @@ app.get("/companies", async(req,res)=>{
               if(storedToken.rowCount == 0) {return res.status(401).json({error: "Unauthorized"});}
               if(storedToken.rows[0].token != token) {return res.status(401).json({error: "Unauthorized"});}
               if(storedToken.rows[0].account_disabled) {return res.status(401).json({error: "Account is disabled"});}
-              const stocks_query = pool.query('SELECT * FROM stocks WHERE email = $1', [email.toLowerCase()], (err, data) => {
+              const stocks_query = pool.query('SELECT company_symbol, shares, email FROM stocks WHERE email = $1', [email.toLowerCase()], (err, data) => {
                 if(err) {return res.status(500).json({error: "Service currently not available"});}
-                delete data.rows[0].stock_id;
                 return res.status(200).json(data.rows);
               })
             })
