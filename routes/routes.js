@@ -453,7 +453,7 @@ app.get("/companies", async(req,res)=>{
                         if(err) {return res.status(500).json({error: "Service currently not available"});}
                         const stopsell_query = pool.query('SELECT * FROM stop_sell_order WHERE email = $1', [email.toLowerCase()], (err, stopsell_data) => {
                           if(err) {return res.status(500).json({error: "Service currently not available"});}
-                            return res.status(200).json({limitbuy:limitbuy_data, limitsell:limitsell_data, marketbuy:marketbuy_data, marketsell:marketsell_data, stopbuy:stopbuy_data, stopsell:stopsell_data});
+                            return res.status(200).json({limitbuy:limitbuy_data.rows, limitsell:limitsell_data.rows, marketbuy:marketbuy_data.rows, marketsell:marketsell_data.rows, stopbuy:stopbuy_data.rows, stopsell:stopsell_data.rows});
                         })
                       })
                     })
