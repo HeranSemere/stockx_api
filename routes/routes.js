@@ -424,6 +424,58 @@ app.get("/companies", async(req,res)=>{
     }
   });
 
+  app.post("/user/orders", async(req,res)=>{
+    try{
+      const {email} = req.body;
+      if (!(email)) {
+        return res.status(400).json({error: "All inputs are required"});
+      }
+      if (req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Bearer') {
+        var token =  req.headers.authorization.split(' ')[1];
+        var verified = jwt.verify(token, jwt_key);
+        if(verified){
+          try{
+            const token_query = pool.query('SELECT * FROM investor WHERE email = $1', [email.toLowerCase()], (err, storedToken) => {
+              if(err) {return res.status(500).json({error: "Service currently not available"});}
+              if(storedToken.rowCount == 0) {return res.status(401).json({error: "Unauthorized"});}
+              if(storedToken.rows[0].token != token) {return res.status(401).json({error: "Unauthorized"});}
+              if(storedToken.rows[0].account_disabled) {return res.status(401).json({error: "Account is disabled"});}
+              
+              const limitbuy_query = pool.query('SELECT * FROM limit_buy_order WHERE email = $1', [email.toLowerCase()], (err, limitbuy_data) => {
+                if(err) {return res.status(500).json({error: "Service currently not available"});}
+                const limitsell_query = pool.query('SELECT * FROM limit_sell_order WHERE email = $1', [email.toLowerCase()], (err, limitsell_data) => {
+                  if(err) {return res.status(500).json({error: "Service currently not available"});}
+                  const marketbuy_query = pool.query('SELECT * FROM market_buy_order WHERE email = $1', [email.toLowerCase()], (err, marketbuy_data) => {
+                    if(err) {return res.status(500).json({error: "Service currently not available"});}
+                    const marketsell_query = pool.query('SELECT * FROM market_sell_order WHERE email = $1', [email.toLowerCase()], (err, marketsell_data) => {
+                      if(err) {return res.status(500).json({error: "Service currently not available"});}
+                      const stopbuy_query = pool.query('SELECT * FROM stop_buy_order WHERE email = $1', [email.toLowerCase()], (err, stopbuy_data) => {
+                        if(err) {return res.status(500).json({error: "Service currently not available"});}
+                        const stopsell_query = pool.query('SELECT * FROM stop_sell_order WHERE email = $1', [email.toLowerCase()], (err, stopsell_data) => {
+                          if(err) {return res.status(500).json({error: "Service currently not available"});}
+                            return res.status(200).json({limitbuy:limitbuy_data, limitsell:limitsell_data, marketbuy:marketbuy_data, marketsell:marketsell_data, stopbuy:stopbuy_data, stopsell:stopsell_data});
+                        })
+                      })
+                    })
+                  })
+                })             
+                
+              })
+            })
+          }catch(err){
+            return res.status(500).json({error: "Service currently not available"});
+          }
+        }else{
+          return res.status(401).json({error: "Unauthorized"});
+        }
+      }else{
+        return res.status(401).json({error: "Unauthorized"});
+      }
+    }catch(e){
+      return res.status(401).json({error: "Unauthorized"});
+    }
+  });
+
   app.post("/user/limitsell", async(req,res)=>{
     try{
       const {email} = req.body;
