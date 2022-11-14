@@ -4,12 +4,14 @@ const jwt= require("jsonwebtoken");
 const jwt_key = process.env.JWT_SECRET || 'cvTlQ37zikOavLwQ2yhMiCnJJoWo8fEXIPSOCUBKPDYS2pFwhH8EEkTHiHxx8iL'
 const jwt_expire = process.env.JWT_EXPIRES || 864000
 const express = require("express");
+var cors = require('cors');
 const app = express();
 const port = process.env.PORT || 3000
 const http = require("http").createServer(app);
 const io = require("socket.io")(http);
 const companies = require("../static_files/socket_data");
 app.use(express.json())
+app.use(cors({origin: '*'}));
 
 module.exports = {
     bcrypt: bcrypt,
