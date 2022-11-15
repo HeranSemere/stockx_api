@@ -204,8 +204,8 @@ app.get("/companies", async(req,res)=>{
 
   app.post("/user/marketbuy/new", async(req,res)=>{
     try{
-      const { email, company_symbol, shares} = req.body;
-      if (!(email && company_symbol && shares)) {
+      const { email, company_symbol, shares, total_price} = req.body;
+      if (!(email && company_symbol && shares && total_price)) {
         return res.status(400).json({error: "All inputs are required"});
       }
       if (req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Bearer') {
@@ -218,7 +218,7 @@ app.get("/companies", async(req,res)=>{
               if(storedToken.rowCount == 0) {return res.status(401).json({error: "Unauthorized"});}
               if(storedToken.rows[0].token != token) {return res.status(401).json({error: "Unauthorized"});}
               if(storedToken.rows[0].account_disabled) {return res.status(401).json({error: "Account is disabled"});}
-              const new_market_buy_query = pool.query('INSERT INTO market_buy_order(company_symbol, shares, email) VALUES($1, $2, $3)', [company_symbol, shares, email.toLowerCase()], (err, data) => {
+              const new_market_buy_query = pool.query('INSERT INTO market_buy_order(company_symbol, shares, email, total_price) VALUES($1, $2, $3, $4)', [company_symbol, shares, email.toLowerCase(), total_price], (err, data) => {
                 if(err) {return res.status(500).json({error: "Service currently not available"});}
                 if(data.rowCount == 0) {return res.status(500).json({error: "Service currently not available"});}
                 return res.status(200).json({ message: "Market buy order placed" });
@@ -316,8 +316,8 @@ app.get("/companies", async(req,res)=>{
 
   app.post("/user/marketsell/new", async(req,res)=>{
     try{
-      const { email, company_symbol, shares} = req.body;
-      if (!(email && company_symbol && shares)) {
+      const { email, company_symbol, shares, total_price} = req.body;
+      if (!(email && company_symbol && shares && total_price)) {
         return res.status(400).json({error: "All inputs are required"});
       }
       if (req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Bearer') {
@@ -330,7 +330,7 @@ app.get("/companies", async(req,res)=>{
               if(storedToken.rowCount == 0) {return res.status(401).json({error: "Unauthorized"});}
               if(storedToken.rows[0].token != token) {return res.status(401).json({error: "Unauthorized"});}
               if(storedToken.rows[0].account_disabled) {return res.status(401).json({error: "Account is disabled"});}
-              const new_market_sell_query = pool.query('INSERT INTO market_sell_order(company_symbol, shares, email) VALUES($1, $2, $3)', [company_symbol, shares, email.toLowerCase()], (err, data) => {
+              const new_market_sell_query = pool.query('INSERT INTO market_sell_order(company_symbol, shares, email, total_price) VALUES($1, $2, $3, $4)', [company_symbol, shares, email.toLowerCase(), total_price], (err, data) => {
                 if(err) {return res.status(500).json({error: "Service currently not available"});}
                 if(data.rowCount == 0) {return res.status(500).json({error: "Service currently not available"});}
                 return res.status(200).json({ message: "Market sell order placed" });
