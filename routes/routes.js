@@ -1035,8 +1035,8 @@ app.get("/companies", async(req,res)=>{
 
   app.put("/admin/investor", async(req,res)=>{
     try{
-      const {email, investor_email, account_disabled} = req.body;
-      if (!(email && investor_email && account_disabled)) {
+      const {investor_email, account_disabled} = req.body;
+      if (!(investor_email && account_disabled)) {
         return res.status(400).json({error: "All inputs are required"});
       }
    
