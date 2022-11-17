@@ -1016,11 +1016,7 @@ app.get("/companies", async(req,res)=>{
 
   app.get("/admin/investors", async(req,res)=>{
     try{
-      const {email} = req.body;
-      if (!(email)) {
-        return res.status(400).json({error: "All inputs are required"});
-      }
-
+     
               const investors_query = pool.query('SELECT * FROM investor', (err, data) => {
                 if(err) {return res.status(500).json({error: "Service currently not available"});}
                 delete data.rows[0].password;
@@ -1037,7 +1033,7 @@ app.get("/companies", async(req,res)=>{
   );
 
 
-  app.get("/admin/investor", async(req,res)=>{
+  app.put("/admin/investor", async(req,res)=>{
     try{
       const {email, investor_email, account_disabled} = req.body;
       if (!(email && investor_email && account_disabled)) {
